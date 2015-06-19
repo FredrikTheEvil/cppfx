@@ -1,4 +1,4 @@
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/../cppfx/include" "${CMAKE_CURRENT_BINARY_DIR}")
+include_directories("${CMAKE_CURRENT_BINARY_DIR}/../cppfx/" "${CMAKE_CURRENT_BINARY_DIR}")
 
 set(SDL_BUILDING_LIBRARY FALSE)
 find_package(SDL)
