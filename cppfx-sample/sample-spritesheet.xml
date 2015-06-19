@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<SpriteSheet textureAtlas="sample-atlas.xml">
+	<SlicedSprite 
+		name="box" 
+		sprite="box.png"
+		left="16" 
+		right="16" 
+		top="16" 
+		bottom="16" />
+</SpriteSheet>

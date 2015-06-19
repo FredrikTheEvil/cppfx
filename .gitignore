@@ -229,3 +229,14 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/cppfx/cppfx.sln
+/cppfx/cppfx.vcxproj
+/cppfx/cppfx.vcxproj.filters
+/cppfx/include/cppfx/export.h
+/cppfx/include/cppfx/config.h
+/build_info/build_info.vcxproj.filters
+/build_info/build_info.vcxproj
+/cppfx/dllmain.cpp
+/build_info
+/cppfx-sample/*.vcxproj
+/cppfx-sample/*.filters

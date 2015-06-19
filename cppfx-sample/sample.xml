@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<document>
+  <head>
+  	<link rel="spritesheet" href="sample-spritesheet.xml"/>
+  	<link rel="font" href="Arial_30.fnt"/>
+  </head>
+  <body>
+  		<sprite sprite="box"
+  				width="200"
+	  			height="100"
+	  			origin="center"
+	  			align="center"
+	  			absolute-size="absolute-size"
+  			>
+	  		<label value="Hello World!" font="Arial"
+	  			x="16"
+	  			y="16"
+	  			absolute-offset="absolute-offset"
+	  			wave-effect="wave-effect"
+	  			/>
+  		</sprite>
+  </body>
+</document>
