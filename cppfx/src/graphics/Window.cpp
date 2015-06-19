@@ -273,11 +273,32 @@ namespace cppfx {
 		bool Window::processEvents() {
 #ifdef CPPFX_USE_SDL
 			SDL_Event event;
-			while (SDL_PollEvents(&event)) {
+			while (SDL_PollEvent(&event)) {
 				if(event.type == SDL_QUIT) {
 					Event e;
 					e.type = EventType::QUIT;
 					eventQueue.push(e);
+				}
+				else if (event.type == SDL_MOUSEMOTION) {
+					Event e;
+					e.type = EventType::INPUT_MOUSEMOTION;
+					e.mouseMotion.x = event.motion.x;
+					e.mouseMotion.y = event.motion.y;
+					eventQueue.push(e);
+				}
+				else if(event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) {
+					Event e;
+					e.type = event.type == SDL_MOUSEBUTTONDOWN ? EventType::INPUT_MOUSEBUTTONDOWN : EventType::INPUT_MOUSEBUTTONUP;
+					e.mouseButton.button = input::MouseButton(event.button.button);
+					eventQueue.push(e);
+				}
+				else if (event.type == SDL_WINDOWEVENT) {
+					if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+						Event e;
+						e.resize.width = event.window.data1;
+						e.resize.height = event.window.data2;
+						eventQueue.push(e);
+					}
 				}
 			}
 #elif defined(CPPFX_USE_GLFW)
