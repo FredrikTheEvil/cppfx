@@ -155,8 +155,8 @@ namespace cppfx {
 			initWindowSystem();
 			handle = new WindowHandle();
 #ifdef CPPFX_USE_SDL
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 			SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
@@ -188,7 +188,8 @@ namespace cppfx {
 #ifdef CPPFX_USE_GLEW
 			auto err = glewInit();
 			if (err != GLEW_OK) {
-				throw std::runtime_error("failed to initialize opengl");
+				auto errStr = std::string(reinterpret_cast<const char*>(glewGetErrorString(err)));
+				throw std::runtime_error(errStr);
 			}
 #else
 			CPPFX_STATIC_ASSERT(false);
