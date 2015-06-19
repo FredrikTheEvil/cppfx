@@ -6,6 +6,8 @@
 #endif
 #include <map>
 #include <string.h>
+#include <cppfx/graphics/DefaultTextureLoader.h>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx {
 	namespace graphics {
@@ -28,7 +30,7 @@ namespace cppfx {
 		Context::~Context() {
 			if (s_current == this)
 				s_current = nullptr;
-			
+
 		}
 
 		void Context::setTextureLoader(ITextureLoader* loader)
@@ -216,18 +218,16 @@ namespace cppfx {
 
 		ref_ptr<Texture2D> Context::loadTexture2D(const string& fileName)
 		{
-			if (textureLoader.valid())
-			{
-				ref_ptr<Texture2D> tex = textureLoader->loadTexture2D(fileName);
-				return tex;
-			}
-			return nullptr;
+			if (!textureLoader.valid())
+				textureLoader = new DefaultTextureLoader(this);
+			ref_ptr<Texture2D> tex = textureLoader->loadTexture2D(fileName);
+			return tex;
 		}
 
 		void Context::bindTexture(unsigned textureUnit, ref_ptr<Texture> texture)
 		{
 			if (textureUnit >= size_t(capsNumTexUnits))
-				throw std::runtime_error("texture unit index out of range");
+				throw RuntimeError("texture unit index out of range");
 			if (textureUnits[textureUnit] != texture)
 			{
 				glActiveTexture(GL_TEXTURE0 + textureUnit);
@@ -242,7 +242,7 @@ namespace cppfx {
 		ref_ptr<Texture> Context::getBoundTexture(unsigned textureUnit)
 		{
 			if (textureUnit >= size_t(capsNumTexUnits))
-				throw std::runtime_error("texture unit index out of range");
+				throw RuntimeError("texture unit index out of range");
 			return textureUnits[textureUnit];
 		}
 

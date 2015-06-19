@@ -2,6 +2,7 @@
 #include <cppfx/rapidxml.h>
 #include <fstream>
 #include <cppfx/Xml.h>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -16,7 +17,7 @@ namespace cppfx
 			doc.parse<0>(const_cast<char*>(get_string_buffer(buffer)));
 			xml_node<>* fontNode = doc.first_node("font");
 			if (fontNode == nullptr)
-				throw std::runtime_error("invalid bmfont xml file");
+				throw RuntimeError("invalid bmfont xml file");
 			xml::node* infoNode = fontNode->first_node("info");
 			xml::node* commonNode = fontNode->first_node("common");
 			xml::node* pagesNode = fontNode->first_node("pages");
@@ -25,7 +26,7 @@ namespace cppfx
 
 			if (infoNode == nullptr || commonNode == nullptr || pagesNode == nullptr ||
 				charsNode == nullptr)
-				throw std::runtime_error("invalid bmfont xml file");
+				throw RuntimeError("invalid bmfont xml file");
 			xml_attribute<>* nameAttrib = infoNode->first_attribute("face", 4);
 			name = xml::getAttribValue(nameAttrib);
 			size = xml::getAttribInt(infoNode, "size");

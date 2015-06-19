@@ -13,8 +13,8 @@
 	  			absolute-size="absolute-size"
   			>
 	  		<label value="Hello World!" font="Arial"
-	  			x="16"
-	  			y="16"
+	  			x="20"
+	  			y="20"
 	  			absolute-offset="absolute-offset"
 	  			wave-effect="wave-effect"
 	  			/>

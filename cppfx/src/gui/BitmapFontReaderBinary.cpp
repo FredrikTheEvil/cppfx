@@ -1,6 +1,7 @@
 #include <cppfx/gui/BitmapFont.h>
 #include <fstream>
 #include <sstream>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -43,7 +44,7 @@ namespace cppfx
 					blockSize++;
 				}
 				else
-					throw std::runtime_error("bmfont files must be version 3 or higher");
+					throw RuntimeError("bmfont files must be version 3 or higher");
 
 				std::vector<char> nameBuffer(size - blockSize);
 				is.read(nameBuffer.data(), size - blockSize);
@@ -80,7 +81,7 @@ namespace cppfx
 				}
 				else
 				{
-					throw std::runtime_error("bmfont files must be version 3 or higher");
+					throw RuntimeError("bmfont files must be version 3 or higher");
 				}
 			}
 		};
@@ -117,7 +118,7 @@ namespace cppfx
 			ifs.read(&version, 1);
 			string sign = signature;
 			if (sign != "BMF")
-				throw std::runtime_error("not a bmfont binary file");
+				throw RuntimeError("not a bmfont binary file");
 			unsigned char blockId;
 			unsigned int blockSize;
 			while (!ifs.eof())

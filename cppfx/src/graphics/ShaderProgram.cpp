@@ -1,6 +1,7 @@
 #include <cppfx/graphics/ShaderProgram.h>
 #include <cppfx/graphics/ShaderProgramParameter.h>
 #include <cppfx/graphics/Context.h>
+#include <cppfx/Exceptions.h>
 
 #ifdef CPPFX_USE_GLEW
 #include <GL/glew.h>
@@ -68,7 +69,7 @@ namespace cppfx
 				glGetProgramiv(id, GL_INFO_LOG_LENGTH, &logLength);
 				if (logLength <= 0) {
 					glDeleteProgram(id);
-					throw std::runtime_error("failed to compile shader: unknown reason");
+					throw RuntimeError("failed to compile shader: unknown reason");
 				}
 				char* buffer = new char[logLength];
 				GLsizei l;
@@ -76,7 +77,7 @@ namespace cppfx
 				string errorLog(buffer, buffer + l);
 				delete[] buffer;
 				glDeleteProgram(id);
-				throw std::runtime_error(errorLog.data());
+				throw RuntimeError(errorLog.data());
 			}
 
 			int numUniforms = 0;
@@ -102,7 +103,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 			vertexShader = tmpVertexShader;

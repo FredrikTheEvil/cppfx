@@ -1,5 +1,6 @@
 #include <cppfx/graphics/VertexArray.h>
 #include <cppfx/graphics/Context.h>
+#include <cppfx/Exceptions.h>
 
 #ifdef CPPFX_USE_GLEW
 #include <GL/glew.h>
@@ -33,14 +34,14 @@ namespace cppfx
 					maxBuffer = elements[i].buffer;
 			}
 			if (buffers.size() < maxBuffer + 1)
-				throw std::runtime_error("not enough buffer units available");
+				throw RuntimeError("not enough buffer units available");
 
 			VertexArray::elements = std::vector<VertexArrayElement>(elements.begin(), elements.end());
 			VertexArray::buffers = std::vector< ref_ptr< Buffer> >(buffers.begin(), buffers.end());
 
 			for (size_t i = 0; i < buffers.size(); i++)
 				if (buffers[i] == nullptr)
-					throw new std::runtime_error("buffer null reference");
+					throw new RuntimeError("buffer null reference");
 
 			if (impl == Implementation::VAO)
 			{
@@ -53,7 +54,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}
@@ -77,7 +78,7 @@ namespace cppfx
 
 			for (size_t i = 0; i < buffers.size(); i++) {
 				if (buffers[i] == nullptr)
-					throw new std::runtime_error("buffer null reference");
+					throw new RuntimeError("buffer null reference");
 				int sz = 0;
 				int offset = 0;
 				for (size_t j = 0; j < elements.size(); j++) {
@@ -113,7 +114,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}
@@ -125,7 +126,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}
@@ -153,7 +154,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}
@@ -166,7 +167,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}

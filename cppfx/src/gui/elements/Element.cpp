@@ -6,6 +6,7 @@
 #include <cppfx/gui/elements/LabelElementFactory.h>
 #include <cppfx/gui/GuiEvent.h>
 #include <cppfx/gui/Widget.h>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -291,7 +292,7 @@ namespace cppfx
 					if (doc != nullptr) {
 						if (newId.size() > 0) {
 							if (doc->idCache.contains(newId))
-								throw std::runtime_error("");
+								throw RuntimeError("");
 							doc->idCache.insert(newId, this);
 						}
 						if (id.size() > 0)

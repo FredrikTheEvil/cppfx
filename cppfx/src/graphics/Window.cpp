@@ -1,5 +1,6 @@
 #include "cppfx/platform/Window.h"
 #include "cppfx/weak_ptr.h"
+#include <cppfx/Exceptions.h>
 
 #ifdef CPPFX_USE_GLEW
 #include <GL/glew.h>
@@ -163,7 +164,7 @@ namespace cppfx {
 			GLFWerrorfun fn;
 			glfwSetErrorCallback(glfwErrorHandler);
 			if (glfwInit() == GL_FALSE)
-				throw std::runtime_error("failed to initialize windowing system");
+				throw RuntimeError("failed to initialize windowing system");
 #endif
 			s_windowSystemInitialized = true;
 			atexit(cleanupWindowSystem);
@@ -188,7 +189,7 @@ namespace cppfx {
 			handle->window = SDL_CreateWindow(get_string_buffer(title), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 				width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 			if (handle->window == nullptr) {
-				throw std::runtime_error("failed to create window");
+				throw RuntimeError("failed to create window");
 			}
 			handle->context = SDL_GL_CreateContext(handle->window);
 			SDL_GL_MakeCurrent(handle->window, handle->context);
@@ -196,7 +197,7 @@ namespace cppfx {
 			GLFWmonitor* monitor = nullptr;
 			handle->window = glfwCreateWindow(width, height, get_string_buffer(title), monitor, nullptr);
 			if (handle->window == nullptr)
-				throw std::runtime_error("failed to create window");
+				throw RuntimeError("failed to create window");
 			glfwMakeContextCurrent(handle->window);
 			glfwSetCharModsCallback(handle->window, WindowAccess::charmods_callback);
 			glfwSetKeyCallback(handle->window, WindowAccess::key_callback);
@@ -210,7 +211,7 @@ namespace cppfx {
 			auto err = glewInit();
 			if (err != GLEW_OK) {
 				auto errStr = std::string(reinterpret_cast<const char*>(glewGetErrorString(err)));
-				throw std::runtime_error(errStr);
+				throw RuntimeError(errStr);
 			}
 #else
 			CPPFX_STATIC_ASSERT(false);

@@ -26,10 +26,12 @@ endif()
 
 check_function_exists(sprintf_s CPPFX_HAVE_SPRINTF_S)
 check_function_exists(sscanf_s CPPFX_HAVE_SSCANF_S)
+check_function_exists(fopen_s CPPFX_HAVE_FOPEN_S)
 
 find_package(GLFW)
 find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(png)
 
 add_subdirectory (cppfx)
 add_subdirectory (cppfx-sample)

@@ -2,6 +2,7 @@
 #include <cppfx/Xml.h>
 #include <fstream>
 #include <cppfx/gui/BitmapFont.h>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -112,7 +113,7 @@ namespace cppfx
 				{
 					auto textureFileName = xml::getAttribValue(sheetNode->first_attribute("texture", 7));
 					if (textureFileName.size() == 0)
-						throw std::runtime_error("SpriteSheet requires either a texture or a texture atlas");
+						throw RuntimeError("SpriteSheet requires either a texture or a texture atlas");
 					ref_ptr<graphics::Texture2D> texture = context->loadTexture2D(basePath + textureFileName);
 					if (texture.valid())
 						sheet->setTexture(texture);	
@@ -158,7 +159,7 @@ namespace cppfx
 				}
 				return sheet;
 			}
-			throw std::runtime_error("invalid spritesheet");
+			throw RuntimeError("invalid spritesheet");
 		}
 
 		void SpriteSheet::readAtlasFromXml(const string& filename)

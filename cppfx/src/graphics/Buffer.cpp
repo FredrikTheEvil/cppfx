@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #endif
 
-#include <stdexcept>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -52,7 +52,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}
@@ -69,7 +69,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}
@@ -82,7 +82,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}
@@ -98,7 +98,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}
@@ -112,7 +112,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 		}

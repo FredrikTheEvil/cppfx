@@ -1,5 +1,6 @@
 #include <cppfx/graphics/Shader.h>
 #include <cppfx/graphics/Context.h>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -23,7 +24,7 @@ namespace cppfx
 				glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength);
 				if (logLength <= 0) {
 					glDeleteShader(id);
-					throw std::runtime_error("failed to compile shader: unknown reason");
+					throw RuntimeError("failed to compile shader: unknown reason");
 				}
 				char* buffer = new char[logLength];
 				GLsizei l;
@@ -31,13 +32,13 @@ namespace cppfx
 				string errorLog(buffer, buffer + l);
 				delete[] buffer;
 				glDeleteShader(id);
-				throw std::runtime_error(errorLog.data());
+				throw RuntimeError(errorLog.data());
 			}
 #ifndef NDEBUG
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::runtime_error(str);
+				throw RuntimeError(str);
 			}
 #endif
 			context->ref();

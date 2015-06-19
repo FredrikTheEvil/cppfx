@@ -1,6 +1,7 @@
 #include <cppfx/gui/elements/Document.h>
 #include <cppfx/gui/GuiEvent.h>
 #include <fstream>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -162,10 +163,12 @@ namespace cppfx
 
 			void Document::registerElement(const string& tag, const ref_ptr<elements::IElementFactory>& factory) {
 				elementFactories[tag] = factory;
-			}
+			} 
 
 			ref_ptr<Document> Document::loadDocument(const ref_ptr<graphics::Context>& context, const string& fileName)
 			{
+				registerCoreElements();
+
 				std::ifstream ifs(fileName);
 				std::string str = std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 
@@ -178,13 +181,13 @@ namespace cppfx
 			ref_ptr<Document> Document::loadDocumentFromXml(const ref_ptr<graphics::Context>& context, const string& fileName, const xml::node& node) {
 				auto rootNode = node.first_node();
 				if (rootNode == nullptr)
-					throw std::runtime_error("document is empty");
+					throw RuntimeError("document is empty");
 
 				ref_ptr<Document> doc = new Document(context, "");
 				auto tagNamePtr = rootNode->name();
 				string tagName = string(tagNamePtr, tagNamePtr + rootNode->name_size());
 				if (tagName != "document")
-					throw std::runtime_error("expected document node!");
+					throw RuntimeError("expected document node!");
 				doc->parseFromXml(*rootNode);
 				doc->needRedraw = true;
 				return doc;

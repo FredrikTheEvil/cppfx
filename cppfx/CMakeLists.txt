@@ -257,6 +257,7 @@ add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtx/wrap.inl"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/cppfx.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/DeleteHandler.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/Exceptions.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/matrix.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/mutex.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/Object.h"
@@ -271,11 +272,15 @@ add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/WeakMap.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/Xml.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/weak_ptr.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/io/Exceptions.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/platform/Event.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/platform/Window.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/input/Enums.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Enums.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/BmpTextureLoader.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/DefaultTextureLoader.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/MultiTextureLoader.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/PngTextureLoader.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Buffer.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Context.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/ITextureLoader.h"
@@ -313,13 +318,18 @@ add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/elements/SpriteElementFactory.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/cppfx.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/DeleteHandler.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Exceptions.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/mutex.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/Observer.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/Referenced.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/Time.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/vector.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/io/Exceptions.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Context.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/BmpTextureLoader.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/DefaultTextureLoader.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/MultiTextureLoader.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/PngTextureLoader.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Buffer.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/ITextureLoader.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Shader.cpp"
@@ -359,14 +369,14 @@ add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/elements/SpriteElementFactory.cpp"
 )
 
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
     execute_process(
         COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
     if (NOT (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7))
         message(FATAL_ERROR "${PROJECT_NAME} requires g++ 4.7 or greater.")
     endif ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 endif()
 
@@ -403,6 +413,12 @@ if(GLEW_FOUND)
 	set(DEPENDENCIES "${DEPENDENCIES}" "${GLEW_LIBRARIES}")
 endif()
 
+if(PNG_FOUND)
+	set(CPPFX_USE_LIBPNG 1)
+	include_directories("${PNG_INCLUDE_DIRS}")
+	set(DEPENDENCIES "${DEPENDENCIES}" "{PNG_LIBRARIES}")
+endif()
+
 configure_file(
 	"${CMAKE_CURRENT_SOURCE_DIR}/config.h.in"
 	"${CMAKE_CURRENT_BINARY_DIR}/cppfx/config.h"
@@ -429,6 +445,7 @@ install (
 		"${CMAKE_CURRENT_BINARY_DIR}/cppfx/export.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/cppfx.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/DeleteHandler.h"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/Exceptions.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/matrix.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/mutex.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/Object.h"
@@ -458,8 +475,16 @@ install(
 )
 install(
 	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/io/Exceptions.h"
+	DESTINATION include/cppfx/io
+)
+install(
+	FILES
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Enums.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/BmpTextureLoader.h"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/DefaultTextureLoader.h"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/MultiTextureLoader.h"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/PngTextureLoader.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Buffer.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Context.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/ITextureLoader.h"
