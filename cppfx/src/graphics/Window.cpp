@@ -13,7 +13,7 @@
 #include <SDL.h>
 #endif
 
-#include <exception>
+#include <stdexcept>
 #include <iostream>
 
 using namespace cppfx::graphics;

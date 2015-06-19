@@ -33,7 +33,7 @@ namespace cppfx
 					maxBuffer = elements[i].buffer;
 			}
 			if (buffers.size() < maxBuffer + 1)
-				throw std::runtime_error();
+				throw std::runtime_error("not enough buffer units available");
 
 			VertexArray::elements = std::vector<VertexArrayElement>(elements.begin(), elements.end());
 			VertexArray::buffers = std::vector< ref_ptr< Buffer> >(buffers.begin(), buffers.end());
