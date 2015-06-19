@@ -67,6 +67,11 @@ namespace cppfx
 		}
 
 		void VertexArray::BindLegacy() {
+			if (indexBuffer.valid())
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer->_id);
+			else
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
 			std::vector<int> bufferStrides;
 			std::vector<int> elementOffsets = std::vector<int>(elements.size());
 
