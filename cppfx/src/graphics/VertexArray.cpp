@@ -33,14 +33,14 @@ namespace cppfx
 					maxBuffer = elements[i].buffer;
 			}
 			if (buffers.size() < maxBuffer + 1)
-				throw std::exception();
+				throw std::runtime_error();
 
 			VertexArray::elements = std::vector<VertexArrayElement>(elements.begin(), elements.end());
 			VertexArray::buffers = std::vector< ref_ptr< Buffer> >(buffers.begin(), buffers.end());
 
 			for (size_t i = 0; i < buffers.size(); i++)
 				if (buffers[i] == nullptr)
-					throw new std::exception("buffer null reference");
+					throw new std::runtime_error("buffer null reference");
 
 			if (impl == Implementation::VAO)
 			{
@@ -53,7 +53,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::exception(str);
+				throw std::runtime_error(str);
 			}
 #endif
 		}
@@ -72,7 +72,7 @@ namespace cppfx
 
 			for (size_t i = 0; i < buffers.size(); i++) {
 				if (buffers[i] == nullptr)
-					throw new std::exception("buffer null reference");
+					throw new std::runtime_error("buffer null reference");
 				int sz = 0;
 				int offset = 0;
 				for (size_t j = 0; j < elements.size(); j++) {
@@ -108,7 +108,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::exception(str);
+				throw std::runtime_error(str);
 			}
 #endif
 		}
@@ -120,7 +120,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::exception(str);
+				throw std::runtime_error(str);
 			}
 #endif
 		}
@@ -148,7 +148,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::exception(str);
+				throw std::runtime_error(str);
 			}
 #endif
 		}
@@ -161,7 +161,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::exception(str);
+				throw std::runtime_error(str);
 			}
 #endif
 		}

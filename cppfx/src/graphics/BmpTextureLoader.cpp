@@ -29,7 +29,7 @@ namespace cppfx {
 			void parse(std::istream& stream) {
 				stream.read(signature, 2);
 				if (signature[0] != 'B' || signature[1] != 'M')
-					throw std::exception("file is not a bmp file");
+					throw std::runtime_error("file is not a bmp file");
 				stream.read(reinterpret_cast<char*>(&fileSize), 4);
 				stream.read(reinterpret_cast<char*>(&reserved0), 2);
 				stream.read(reinterpret_cast<char*>(&reserved1), 2);
@@ -47,7 +47,7 @@ namespace cppfx {
 				stream.read(reinterpret_cast<char*>(&numImportantColors), 4);
 
 				if (numBitsPerPixel != 16 && numBitsPerPixel != 24 && numBitsPerPixel != 32)
-					throw std::exception("unsupported pixel format");
+					throw std::runtime_error("unsupported pixel format");
 			}
 		};
 
@@ -96,7 +96,7 @@ namespace cppfx {
 			ifs.read(const_cast<char*>(imageData.data()), dataSize);
 
 			if (fileInfo.compression != BitmapFileCompression::NONE)
-				throw std::exception("bmp rle compression is not supported");
+				throw std::runtime_error("bmp rle compression is not supported");
 
 			for (unsigned int i = 0; i < fileInfo.height; i++) {
 				auto y = fileInfo.height - i - 1;

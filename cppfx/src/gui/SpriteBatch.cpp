@@ -62,7 +62,7 @@ namespace cppfx
 		void SpriteBatch::updateVertices(size_t offset, const SpriteBatchSprite& sprite)
 		{
 			if (offset >= vertices.size())
-				throw std::exception("sprite vertex out of range");
+				throw std::runtime_error("sprite vertex out of range");
 			vertices[offset + 0] = sprite.topLeft;
 			vertices[offset + 1] = sprite.bottomLeft;
 			vertices[offset + 2] = sprite.topRight;

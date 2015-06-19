@@ -48,7 +48,7 @@ namespace cppfx
 		const SpriteBatchSprite& Widget::getSprite(unsigned i)
 		{
 			if (i >= sprites.size())
-				throw std::exception("sprite index out of range");
+				throw std::runtime_error("sprite index out of range");
 			return sprites[i].batchSprite;
 		}
 
@@ -60,7 +60,7 @@ namespace cppfx
 		void Widget::updateSprite(unsigned int i, const SpriteBatchSprite& sprite)
 		{
 			if (i >= sprites.size())
-				throw std::exception("sprite index out of range");
+				throw std::runtime_error("sprite index out of range");
 			sprites[i].batchSprite = sprite;
 			verticesDirty = true;
 		}
@@ -68,7 +68,7 @@ namespace cppfx
 		void Widget::updateSprite(unsigned i, const SpriteBatchSprite& sprite, const ref_ptr<graphics::Texture2D> texture)
 		{
 			if (i >= sprites.size())
-				throw std::exception("sprite index out of range");
+				throw std::runtime_error("sprite index out of range");
 			WidgetSprite &spr = sprites[i];
 			spr.batchSprite = sprite;
 			if (spr.texture != texture) {

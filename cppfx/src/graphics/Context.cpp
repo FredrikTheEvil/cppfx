@@ -310,7 +310,7 @@ namespace cppfx {
 		void Context::bindTexture(unsigned textureUnit, ref_ptr<Texture> texture)
 		{
 			if (textureUnit >= size_t(capsNumTexUnits))
-				throw std::exception("texture unit index out of range");
+				throw std::runtime_error("texture unit index out of range");
 			if (textureUnits[textureUnit] != texture)
 			{
 				glActiveTexture(GL_TEXTURE0 + textureUnit);
@@ -325,7 +325,7 @@ namespace cppfx {
 		ref_ptr<Texture> Context::getBoundTexture(unsigned textureUnit)
 		{
 			if (textureUnit >= size_t(capsNumTexUnits))
-				throw std::exception("texture unit index out of range");
+				throw std::runtime_error("texture unit index out of range");
 			return textureUnits[textureUnit];
 		}
 
