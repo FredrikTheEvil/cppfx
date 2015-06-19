@@ -10,6 +10,7 @@
 #include <cppfx/graphics/ShaderProgramParameter.h>
 
 #include <unordered_map>
+#include <vector>
 
 #if _MSC_VER && !__INTEL_COMPILER
 #	pragma warning(push)
