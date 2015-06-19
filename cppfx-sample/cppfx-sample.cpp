@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	catch (std::regex_error& e) {
-
+		std::cerr << e.what() << ": " << e.code();
 	}
 	catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
