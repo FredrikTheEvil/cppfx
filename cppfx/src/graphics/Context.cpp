@@ -6,6 +6,7 @@
 #endif
 #include <regex>
 #include <map>
+#include <string.h>
 
 namespace cppfx {
 	namespace graphics {
