@@ -34,6 +34,7 @@ target_link_libraries (cppfx-sample LINK_PUBLIC cppfx)
 add_custom_command(TARGET cppfx-sample
           POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}
+          COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/Arial_30.fnt ${CMAKE_CURRENT_BINARY_DIR}/.
           COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/sample.xml ${CMAKE_CURRENT_BINARY_DIR}/.
 		  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/sample-atlas.bmp ${CMAKE_CURRENT_BINARY_DIR}/.
 		  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/sample-atlas.xml ${CMAKE_CURRENT_BINARY_DIR}/.
