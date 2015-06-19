@@ -3,6 +3,7 @@
 #include <cppfx/gui/elements/Document.h>
 #include <cppfx/Time.h>
 #include <iostream>
+#include <regex>
 
 using namespace cppfx;
 using namespace cppfx::graphics;
@@ -30,6 +31,9 @@ int main(int argc, char* argv[]) {
 			deltaTime = x - time;
 			time = x;
 		}
+	}
+	catch (std::regex_error& e) {
+
 	}
 	catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
