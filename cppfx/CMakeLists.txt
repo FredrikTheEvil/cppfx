@@ -1,6 +1,6 @@
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-set(GLM_GLM_INCLUDE_FILES
+add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/common.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/exponential.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/ext.hpp"
@@ -24,8 +24,6 @@ set(GLM_GLM_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/vec3.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/vec4.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/vector_relational.hpp"
-)
-set(GLM_DETAIL_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/detail/_features.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/detail/_fixes.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/detail/_noise.hpp"
@@ -104,8 +102,6 @@ set(GLM_DETAIL_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/detail/type_vec4_avx.inl"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/detail/type_vec4_avx2.inl"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/detail/type_vec4_sse2.inl"
-)
-set(GLM_GTC_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtc/bitfield.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtc/bitfield.inl"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtc/color.hpp"
@@ -143,8 +139,6 @@ set(GLM_GTC_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtc/ulp.inl"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtc/vec1.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtc/vec1.inl"
-)
-set(GLM_GTX_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtx/associated_min_max.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtx/associated_min_max.inl"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtx/bit.hpp"
@@ -261,15 +255,6 @@ set(GLM_GTX_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtx/vector_query.inl"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtx/wrap.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/glm/gtx/wrap.inl"
-)
-set(GLM_INCLUDE_FILES
-	"${GLM_GLM_INCLUDE_FILES}"
-	"${GLM_DETAIL_INCLUDE_FILES}"
-	"${GLM_GTC_INCLUDE_FILES}"
-	"${GLM_GTX_INCLUDE_FILES}"
-)
-
-set(CPPFX_CPPFX_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/cppfx.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/DeleteHandler.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/matrix.h"
@@ -286,15 +271,9 @@ set(CPPFX_CPPFX_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/WeakMap.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/Xml.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/weak_ptr.h"
-)
-set(CPPFX_PLATFORM_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/platform/Event.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/platform/Window.h"
-)
-set(CPPFX_INPUT_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/input/Enums.h"
-)
-set(CPPFX_GRAPHICS_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Enums.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/BmpTextureLoader.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Buffer.h"
@@ -307,8 +286,6 @@ set(CPPFX_GRAPHICS_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Texture2D.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/VertexArray.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/VertexArrayElement.h"
-)
-set(CPPFX_GUI_GUI_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/Enums.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/BitmapFont.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/GuiEvent.h"
@@ -321,8 +298,6 @@ set(CPPFX_GUI_GUI_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/SpriteWidget.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/Widget.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/WidgetManager.h"
-)
-set(CPPFX_GUI_ELEMENTS_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/elements/BodyElement.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/elements/BodyElementFactory.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/elements/Document.h"
@@ -336,21 +311,6 @@ set(CPPFX_GUI_ELEMENTS_INCLUDE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/elements/LinkElementFactory.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/elements/SpriteElement.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/gui/elements/SpriteElementFactory.h"
-)
-set(CPPFX_GUI_INCLUDE_FILES
-	"${CPPFX_GUI_GUI_INCLUDE_FILES}"
-	"${CPPFX_GUI_ELEMENTS_INCLUDE_FILES}"
-)
-
-set(CPPFX_INCLUDE_FILES
-	"${GLM_INCLUDE_FILES}"
-	"${CPPFX_CPPFX_INCLUDE_FILES}"
-	"${CPPFX_PLATFORM_INCLUDE_FILES}"
-	"${CPPFX_INPUT_INCLUDE_FILES}"
-	"${CPPFX_GRAPHICS_INCLUDE_FILES}"
-	"${CPPFX_GUI_INCLUDE_FILES}"
-)
-set(CPPFX_SOURCE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/cppfx.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/DeleteHandler.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/mutex.cpp"
@@ -358,7 +318,6 @@ set(CPPFX_SOURCE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/Referenced.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/time.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/vector.cpp"
-
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Context.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/BmpTextureLoader.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Buffer.cpp"
@@ -371,7 +330,6 @@ set(CPPFX_SOURCE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/VertexArray.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/VertexArrayElement.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Window.cpp"
-
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/BitmapFont.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/BitmapFontReaderBinary.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/BitmapFontReaderText.cpp"
@@ -386,7 +344,6 @@ set(CPPFX_SOURCE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/SpriteWidget.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/Widget.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/WidgetManager.cpp"
-
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/elements/BodyElement.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/elements/BodyElementFactory.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/elements/Document.cpp"
@@ -400,10 +357,6 @@ set(CPPFX_SOURCE_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/elements/LinkElementFactory.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/elements/SpriteElement.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/elements/SpriteElementFactory.cpp"
-)
-add_library (cppfx ${cppfx_LIBRARY_TYPE} 
-	"${CPPFX_INCLUDE_FILES}"
-	"${CPPFX_SOURCE_FILES}"
 )
 
 set(DEPENDENCIES "${OPENGL_LIBRARIES}")
