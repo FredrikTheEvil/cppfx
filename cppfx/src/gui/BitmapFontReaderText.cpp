@@ -34,7 +34,7 @@ namespace cppfx
 						}
 						name = line.substr(pos+1, end-1-pos);
 						string format = "info face=\"" + name + "\" size=%d";
-#ifdef CPPFX_HAVE_SSCANF_S
+#if defined(CPPFX_HAVE_SSCANF_S)
 						sscanf_s(line.data(), format.data(), &size);
 #else
 						sscanf(line.data(), format.data(), &size);
@@ -47,7 +47,7 @@ namespace cppfx
 					if (line.size() > 0)
 					{
 						int scaleW = 0, scaleH = 0;
-#ifdef CPPFX_HAVE_SSCANF_S
+#if defined(CPPFX_HAVE_SSCANF_S)
 						sscanf_s(line.data(), "common lineHeight=%d base=%d scaleW=%d scaleH=%d pages=%d", &lineHeight, &base, &scaleW, &scaleH, &pageCount);
 #else
 						sscanf(line.data(), "common lineHeight=%d base=%d scaleW=%d scaleH=%d pages=%d", &lineHeight, &base, &scaleW, &scaleH, &pageCount);
@@ -76,7 +76,7 @@ namespace cppfx
 				{
 					if (line.size() > 0)
 					{
-#ifdef CPPFX_HAVE_SSCANF_S
+#if defined(CPPFX_HAVE_SSCANF_S)
 						sscanf_s(line.data(), "chars count=%d", &numChars);
 #else
 						sscanf(line.data(), "chars count=%d", &numChars);
@@ -90,8 +90,13 @@ namespace cppfx
 					{
 						int id;
 						BitmapFontGlyph glyph;
+#if defined(CPPFX_HAVE_SSCANF_S)
 						sscanf_s(line.data(), "char id=%d x=%d y=%d width=%d height=%d xoffset=%d yoffset=%d xadvance=%d page=%d"
 							, &id, &glyph.x, &glyph.y, &glyph.width, &glyph.height, &glyph.xoffset, &glyph.yoffset, &glyph.xadvance, &glyph.page);
+#else
+						sscanf(line.data(), "char id=%d x=%d y=%d width=%d height=%d xoffset=%d yoffset=%d xadvance=%d page=%d"
+							, &id, &glyph.x, &glyph.y, &glyph.width, &glyph.height, &glyph.xoffset, &glyph.yoffset, &glyph.xadvance, &glyph.page);
+#endif
 						if (id == -1)
 						{
 							glyph.id = 0xffffffff;
@@ -111,7 +116,7 @@ namespace cppfx
 				{
 					if (line.size() > 0)
 					{
-#ifdef CPPFX_HAVE_SSCANF_S
+#if defined(CPPFX_HAVE_SSCANF_S)
 						sscanf_s(line.data(), "kernings count=%d", &numKernings);
 #else
 						sscanf(line.data(), "kernings count=%d", &numKernings);
@@ -125,7 +130,11 @@ namespace cppfx
 					if (line.size() > 0)
 					{
 						int first = 0, second = 0, amount = 0;
+#if defined(CPPFX_HAVE_SSCANF_S)
 						sscanf_s(line.data(), "kerning first=%d second=%d amount=%d", &first, &second, &amount);
+#else
+						sscanf(line.data(), "kerning first=%d second=%d amount=%d", &first, &second, &amount);
+#endif
 						BitmapFontKerningPair kp;
 						kp.first = first;
 						kp.second = second;
