@@ -32,7 +32,7 @@ namespace cppfx
 	};
 
 	template<typename T, typename TT>
-	typename T lerp(const T& v0, const T& v1, TT t)
+	T lerp(const T& v0, const T& v1, TT t)
 	{
 		return (1 - t)*v0 + t*v1;
 	}

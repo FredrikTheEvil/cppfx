@@ -7,6 +7,7 @@
 #include <string>
 
 namespace cppfx {
+#ifdef _MSVC_VER
 	CPPFX_STL template class CPPFX_API std::allocator < char > ;
 	CPPFX_STL template class CPPFX_API std::allocator < wchar_t >;
 	CPPFX_STL template class CPPFX_API std::allocator < char16_t >;
@@ -15,6 +16,7 @@ namespace cppfx {
 	CPPFX_STL template class CPPFX_API std::basic_string < char16_t, std::char_traits<char16_t>, std::allocator<char16_t> > ;
 	CPPFX_STL template class CPPFX_API std::basic_string < char32_t, std::char_traits<char32_t>, std::allocator<char32_t> >;
 	CPPFX_STL template class CPPFX_API std::basic_string < wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > ;
+#endif
 
 	typedef std::basic_string<char, std::char_traits<char>, std::allocator<char> > string;
 	typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring;
@@ -66,7 +68,7 @@ namespace cppfx {
 	// the string implementation changes, just a proper template specialization
 	template <typename String> inline typename string_traits<String>::const_pointer get_string_buffer(const String& str)
 	{
-		CPPFX_STATIC_ASSERT(false);
+		return typename string_traits<String>::const_pointer();
 	}
 	template <> inline string_traits<string>::const_pointer get_string_buffer<string>(const string& str) {
 		return str.data();
@@ -75,7 +77,7 @@ namespace cppfx {
 	template<typename Source, typename Target>
 	inline Target convert_string(const Source&)
 	{
-		CPPFX_STATIC_ASSERT(false);
+		return Target();
 	}
 	template<>
 	inline string convert_string<string, string>(const string& source) 

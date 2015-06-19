@@ -359,6 +359,17 @@ add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/gui/elements/SpriteElementFactory.cpp"
 )
 
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+    execute_process(
+        COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+    if (NOT (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7))
+        message(FATAL_ERROR "${PROJECT_NAME} requires g++ 4.7 or greater.")
+    endif ()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+endif()
+
 set(DEPENDENCIES "${OPENGL_LIBRARIES}")
 
 set(SDL_BUILDING_LIBRARY TRUE)
@@ -408,6 +419,7 @@ GENERATE_EXPORT_HEADER(cppfx
 
 #target_link_libraries(cppfx ${SDL_LIBRARY} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 target_link_libraries(cppfx "${DEPENDENCIES}")
+
 
 install (TARGETS cppfx DESTINATION lib)
 install (TARGETS cppfx DESTINATION bin)
