@@ -3,6 +3,7 @@
 #define CPPFX_VERSION_PATCH @cppfx_VERSION_PATCH@
 
 #cmakedefine CPPFX_HAVE_SPRINTF_S
+#cmakedefine CPPFX_HAVE_SSCANF_S
 #cmakedefine CPPFX_USE_SDL
 #cmakedefine CPPFX_USE_GLEW
 #cmakedefine CPPFX_USE_GLFW

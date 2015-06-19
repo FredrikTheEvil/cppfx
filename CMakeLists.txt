@@ -25,6 +25,7 @@ else()
 endif()
 
 check_function_exists(sprintf_s CPPFX_HAVE_SPRINTF_S)
+check_function_exists(sprintf_s CPPFX_HAVE_SSCANF_S)
 
 find_package(GLFW)
 find_package(GLEW REQUIRED)
