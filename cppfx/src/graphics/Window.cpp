@@ -120,6 +120,27 @@ namespace cppfx {
 			}
 		};
 #endif
+		void Window::enumerateCapabilities()
+		{
+			vendorName = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
+			rendererName = reinterpret_cast<const char*>(glGetString(GL_RENDERER));
+			string glVersion = reinterpret_cast<const char*>(glGetString(GL_VERSION));
+			string shadingLanguageVersion = reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
+			string extensions = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
+			capsGlVersionMajor = 2;
+			capsGlVersionMinor = 1;
+			capsGlVersionPatch = 0;
+			capsGlVersionRevision = 0;
+			capsGlslVersionMajor = 1;
+			capsGlslVersionMinor = 20;
+
+			glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &capsNumTexUnits);
+			glGetIntegerv(GL_MAX_TEXTURE_SIZE, &capsMaxTextureSize);
+			glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE, &capsMaxTextureSize3D);
+			glGetIntegerv(GL_MAX_CUBE_MAP_TEXTURE_SIZE, &capsMaxTextureSizeCube);
+			textureUnits = std::vector< ref_ptr<Texture> >(capsNumTexUnits);
+		}
+
 		static bool s_windowSystemInitialized = false;
 
 		static void cleanupWindowSystem() {

@@ -1,10 +1,9 @@
-#include	"cppfx/graphics/Context.h"
+#include "cppfx/graphics/Context.h"
 #include "cppfx/graphics/BmpTextureLoader.h"
 
 #ifdef CPPFX_USE_GLEW
 #include <GL/glew.h>
 #endif
-#include <regex>
 #include <map>
 #include <string.h>
 
@@ -30,89 +29,6 @@ namespace cppfx {
 			if (s_current == this)
 				s_current = nullptr;
 			
-		}
-
-		static void parseGLVersion(const string glVersion, int& major, int& minor, int& patch, int& revision)
-		{
-			static const char * glVersionRegexStr = "(OpenGL (ES-(CM|CL) ))?((\\d+)\\.(\\d+)(\\.(\\d+))?(\\.(\\d+))?)(\\s+(.*))?";
-			static std::regex glVersionRegex(glVersionRegexStr);
-
-			std::match_results<string_traits<string>::const_iterator> results;
-			if (std::regex_match(glVersion, results, glVersionRegex))
-			{
-				string majorString(results[5].first, results[5].second);
-				string minorString(results[6].first, results[6].second);
-
-				major = atoi(get_string_buffer(majorString));
-				minor = atoi(get_string_buffer(minorString));
-
-				if (results[8].matched)
-				{
-					string patchString(results[8].first, results[8].second);
-					patch = atoi(get_string_buffer(patchString));
-				}
-				else
-					patch = 0;
-
-				if (results[10].matched)
-				{
-					string revString(results[10].first, results[10].second);
-					revision = atoi(get_string_buffer(revString));
-				}
-			}
-		}
-
-		static void parseGlslVersion(const string glslVersion, int& major, int& minor)
-		{
-			static const char * shadingLanguageRegex = "(OpenGL (ES )?GLSL (ES )?)?((\\d+)\\.(\\d+))( (.*))?";
-			static std::regex glslVersionRegex(shadingLanguageRegex);
-
-			std::match_results<string_traits<string>::const_iterator> results;
-			if (std::regex_match(glslVersion, results, glslVersionRegex))
-			{
-				string majorString(results[5].first, results[5].second);
-				string minorString(results[6].first, results[6].second);
-
-				major = atoi(get_string_buffer(majorString));
-				minor = atoi(get_string_buffer(minorString));
-			}
-		}
-
-		static void parseGLExtensions(const string& input, std::set<string>& output)
-		{
-			static const string delimiters = " ";
-			int offset_last = 0;
-			int i = 0;
-			const char* str = get_string_buffer(input);
-			auto len = strlen(str);
-			for (auto itr = str, end = str + len; itr != end; ++itr)
-			{
-				if (*itr == ' ')
-				{
-					if (i > 0)
-						output.insert(string(itr - i, itr));
-					i = -1;
-				}
-				i++;
-			}
-		}
-
-		void Context::enumerateCapabilities()
-		{
-			vendorName = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
-			rendererName = reinterpret_cast<const char*>(glGetString(GL_RENDERER));
-			string glVersion = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-			string shadingLanguageVersion = reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
-			string extensions = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
-			parseGLVersion(glVersion, capsGlVersionMajor, capsGlVersionMinor, capsGlVersionPatch, capsGlVersionRevision);
-			parseGlslVersion(shadingLanguageVersion, capsGlslVersionMajor, capsGlslVersionMinor);
-			parseGLExtensions(extensions, capsExtensions);
-			
-			glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &capsNumTexUnits);
-			glGetIntegerv(GL_MAX_TEXTURE_SIZE, &capsMaxTextureSize);
-			glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE, &capsMaxTextureSize3D);
-			glGetIntegerv(GL_MAX_CUBE_MAP_TEXTURE_SIZE, &capsMaxTextureSizeCube);
-			textureUnits = std::vector< ref_ptr<Texture> >(capsNumTexUnits);
 		}
 
 		void Context::setTextureLoader(ITextureLoader* loader)

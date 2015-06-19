@@ -101,8 +101,6 @@ namespace cppfx {
 			Context(const Context&) = delete;
 			Context& operator = (const Context&) = delete;
 		protected:
-			void enumerateCapabilities();
-
 			int width;
 			int height;
 

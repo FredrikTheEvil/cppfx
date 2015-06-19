@@ -30,6 +30,7 @@ namespace cppfx {
 			void removeClickHandler(const ClickHandler& handler);
 		protected:
 			~Window();
+			void enumerateCapabilities();
 		private:
 			Window(const Window&) = delete;
 			Window& operator=(const Window&) = delete;
