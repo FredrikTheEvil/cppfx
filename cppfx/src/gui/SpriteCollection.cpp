@@ -36,7 +36,7 @@ namespace cppfx {
 		}
 		bool SpriteCollection::tryGetSprite(const string& key, SlicedSprite& sprite, ref_ptr<graphics::Texture2D>& texture)
 		{
-			for (auto itr = spriteSheets.rbegin(); itr != spriteSheets.rend(); ++itr) {
+			for (auto itr = spriteSheets.begin(); itr != spriteSheets.end(); ++itr) {
 				if (itr->second->getSlicedSprite(key, sprite)) {
 					texture = itr->second->getTexture();
 					if (texture.valid())
