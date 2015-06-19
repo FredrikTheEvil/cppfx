@@ -316,7 +316,7 @@ add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/mutex.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/Observer.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/Referenced.cpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/time.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Time.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/vector.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Context.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/BmpTextureLoader.cpp"
