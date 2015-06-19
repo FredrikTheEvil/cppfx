@@ -178,13 +178,13 @@ namespace cppfx
 			ref_ptr<Document> Document::loadDocumentFromXml(const ref_ptr<graphics::Context>& context, const string& fileName, const xml::node& node) {
 				auto rootNode = node.first_node();
 				if (rootNode == nullptr)
-					throw std::exception("document is empty");
+					throw std::runtime_error("document is empty");
 
 				ref_ptr<Document> doc = new Document(context, "");
 				auto tagNamePtr = rootNode->name();
 				string tagName = string(tagNamePtr, tagNamePtr + rootNode->name_size());
 				if (tagName != "document")
-					throw std::exception("expected document node!");
+					throw std::runtime_error("expected document node!");
 				doc->parseFromXml(*rootNode);
 				doc->needRedraw = true;
 				return doc;

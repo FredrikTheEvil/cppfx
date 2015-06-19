@@ -112,7 +112,7 @@ namespace cppfx
 				{
 					auto textureFileName = xml::getAttribValue(sheetNode->first_attribute("texture", 7));
 					if (textureFileName.size() == 0)
-						throw std::exception("SpriteSheet requires either a texture or a texture atlas");
+						throw std::runtime_error("SpriteSheet requires either a texture or a texture atlas");
 					ref_ptr<graphics::Texture2D> texture = context->loadTexture2D(basePath + textureFileName);
 					if (texture.valid())
 						sheet->setTexture(texture);	
@@ -158,7 +158,7 @@ namespace cppfx
 				}
 				return sheet;
 			}
-			throw std::exception("invalid spritesheet");
+			throw std::runtime_error("invalid spritesheet");
 		}
 
 		void SpriteSheet::readAtlasFromXml(const string& filename)

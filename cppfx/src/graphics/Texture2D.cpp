@@ -72,7 +72,7 @@ namespace cppfx
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				const char * str = reinterpret_cast<const char*>(glewGetErrorString(err));
-				throw std::exception(str);
+				throw std::runtime_error(str);
 			}
 #endif
 		}

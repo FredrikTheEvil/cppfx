@@ -36,7 +36,7 @@ namespace cppfx
 			{
 				auto itr = map.find(key);
 				if (itr != map.end())
-					throw std::exception("key is alread in use");
+					throw std::runtime_error("key is alread in use");
 				map.insert(std::pair<Key, Value*>(key, value.get()));
 				value->addObserver(this);
 			}

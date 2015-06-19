@@ -291,7 +291,7 @@ namespace cppfx
 					if (doc != nullptr) {
 						if (newId.size() > 0) {
 							if (doc->idCache.contains(newId))
-								throw std::exception("");
+								throw std::runtime_error("");
 							doc->idCache.insert(newId, this);
 						}
 						if (id.size() > 0)

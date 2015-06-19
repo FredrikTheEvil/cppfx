@@ -17,7 +17,10 @@ namespace cppfx {
 	CPPFX_STL template class CPPFX_API std::basic_string < char32_t, std::char_traits<char32_t>, std::allocator<char32_t> >;
 	CPPFX_STL template class CPPFX_API std::basic_string < wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > ;
 #endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee01705986c6d0bceca734c01101377f5f768652
 	typedef std::basic_string<char, std::char_traits<char>, std::allocator<char> > string;
 	typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > wstring;
 	typedef std::basic_string<char16_t, std::char_traits<char16_t>, std::allocator<char16_t> > string_utf16;
@@ -68,7 +71,10 @@ namespace cppfx {
 	// the string implementation changes, just a proper template specialization
 	template <typename String> inline typename string_traits<String>::const_pointer get_string_buffer(const String& str)
 	{
+<<<<<<< HEAD
 		return typename string_traits<String>::const_pointer();
+=======
+>>>>>>> ee01705986c6d0bceca734c01101377f5f768652
 	}
 	template <> inline string_traits<string>::const_pointer get_string_buffer<string>(const string& str) {
 		return str.data();
