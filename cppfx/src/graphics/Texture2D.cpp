@@ -1,5 +1,5 @@
 #include <cppfx/graphics/Texture2D.h>
-#include <exception>
+#include <stdexcept>
 
 namespace cppfx
 {
