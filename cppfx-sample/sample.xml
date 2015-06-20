@@ -3,6 +3,7 @@
   <head>
   	<link rel="spritesheet" href="sample-spritesheet.xml"/>
   	<link rel="font" href="Arial_30.fnt"/>
+  	<link rel="font" href="Consolas_32.fnt"/>
   </head>
   <body>
   		<sprite sprite="box"
@@ -12,7 +13,7 @@
 	  			align="center"
 	  			absolute-size="absolute-size"
   			>
-	  		<label value="Hello World!" font="Arial"
+	  		<label value="Hello World!" font="Consolas"
 	  			x="20"
 	  			y="20"
 	  			absolute-offset="absolute-offset"
