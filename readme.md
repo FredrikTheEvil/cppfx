@@ -19,7 +19,7 @@ On linux building is easy, just make sure you have all the dependencies. On ubun
 
 ```
 	sudo apt-get install -y cmake git g++ libsdl2-dev libglew-dev libpng-dev
-	git clone https://github.com/FredrikTheEvil/cppfx/cppfx.git
+	git clone https://github.com/FredrikTheEvil/cppfx.git
 	mkdir cppfx/build
 	cd cppfx/build
 	cmake -DCMAKE_BUILD_TYPE=Release ..
