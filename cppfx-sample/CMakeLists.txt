@@ -46,6 +46,7 @@ install(
 		"${CMAKE_CURRENT_SOURCE_DIR}/Arial_30.fnt"
 		"${CMAKE_CURRENT_SOURCE_DIR}/sample.xml"
 		"${CMAKE_CURRENT_SOURCE_DIR}/sample-atlas.bmp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/sample-atlas.png"
 		"${CMAKE_CURRENT_SOURCE_DIR}/sample-atlas.xml"
 		"${CMAKE_CURRENT_SOURCE_DIR}/sample-spritesheet.xml"
 	DESTINATION bin
