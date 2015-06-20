@@ -29,6 +29,12 @@ namespace cppfx {
 
 			void parse(std::istream& stream, const string& fileName) {
 				stream.read(signature, 2);
+				if (!stream.good())
+				{
+					if (stream.eof())
+						throw io::EofException("end of file while reading file signature");
+					throw io::IoException("failed to read file signature from stream");
+				}
 				if (signature[0] != 'B' || signature[1] != 'M')
 					throw io::BadFileFormatException("file is not a bmp file: " + fileName);
 				stream.read(reinterpret_cast<char*>(&fileSize), 4);
@@ -80,7 +86,22 @@ namespace cppfx {
 		}
 
 		ref_ptr<Texture2D> BmpTextureLoader::loadTexture2D(const string& fileName) {
-			std::ifstream ifs(fileName, std::ios_base::binary | std::ios_base::in);
+			string filePath = fileName;
+			for (auto i = filePath.begin(); i != filePath.end(); ++i)
+			{
+				if (*i == '\\')
+					*i = '/';
+			}
+#ifdef WIN32
+			for (auto i = filePath.begin(); i != filePath.end(); ++i)
+			{
+				if (*i == '/')
+					*i = '\\';
+			}
+#endif
+			std::ifstream ifs(filePath, std::ios_base::binary | std::ios_base::in);
+			if (!ifs.good())
+				throw io::FileNotFoundException(fileName);
 			BitmapFileInfo fileInfo;
 			fileInfo.parse(ifs, fileName);
 			if (!ifs.good())

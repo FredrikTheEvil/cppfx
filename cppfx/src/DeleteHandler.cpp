@@ -15,7 +15,7 @@ namespace cppfx {
 	DeleteHandler::~DeleteHandler()
 	{
 		// flushAll();
-		delete _objectsToDelete;
+		delete static_cast<ObjectsToDeleteList*>(_objectsToDelete);
 	}
 
 	void DeleteHandler::flush()

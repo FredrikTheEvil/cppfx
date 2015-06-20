@@ -4,6 +4,7 @@
 #include <cstdarg>
 #include <sstream>
 #include <cppfx/Exceptions.h>
+#include <cppfx/io/Exceptions.h>
 
 namespace cppfx
 {
@@ -389,7 +390,9 @@ namespace cppfx
 					*i = '\\';
 			}
 #endif
-			std::ifstream ifs(filename, std::ios_base::in | std::ios_base::binary);
+			std::ifstream ifs(filePath, std::ios_base::in | std::ios_base::binary);
+			if (!ifs.good())
+				throw io::FileNotFoundException(filename);
 			string buffer = string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 			if (isBinaryBmfont(buffer))
 				readFromBinary(filename, buffer);
@@ -398,7 +401,7 @@ namespace cppfx
 			else if (isTextBmfont(buffer))
 				readFromText(filename, buffer);
 			else
-				throw RuntimeError("unknown bitmap font format");
+				throw io::BadFileFormatException("unknown bitmap font format");
 		}
 	}
 }

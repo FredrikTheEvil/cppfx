@@ -105,7 +105,7 @@ namespace cppfx
 			short amount;
 		};
 
-		void BitmapFont::readFromBinary(const string& filename, const string& buffer)
+		void BitmapFont::readFromBinary(const string& filename, const std::string& buffer)
 		{
 			fileName = filename;
 			std::stringstream ifs(buffer);

@@ -2,6 +2,7 @@
 #include <cppfx/gui/GuiEvent.h>
 #include <fstream>
 #include <cppfx/Exceptions.h>
+#include <cppfx/io/Exceptions.h>
 
 namespace cppfx
 {
@@ -170,6 +171,8 @@ namespace cppfx
 				registerCoreElements();
 
 				std::ifstream ifs(fileName);
+				if (!ifs.good())
+					throw io::FileNotFoundException(fileName);
 				std::string str = std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 
 				xml::document doc;
@@ -179,11 +182,16 @@ namespace cppfx
 			}
 
 			ref_ptr<Document> Document::loadDocumentFromXml(const ref_ptr<graphics::Context>& context, const string& fileName, const xml::node& node) {
+				string basePath = "";
+
+				auto lastPathSeparator = fileName.find_last_of('/');
+				if (lastPathSeparator != string::npos)
+					basePath = fileName.substr(0, lastPathSeparator) + "/";
 				auto rootNode = node.first_node();
 				if (rootNode == nullptr)
 					throw RuntimeError("document is empty");
 
-				ref_ptr<Document> doc = new Document(context, "");
+				ref_ptr<Document> doc = new Document(context, basePath);
 				auto tagNamePtr = rootNode->name();
 				string tagName = string(tagNamePtr, tagNamePtr + rootNode->name_size());
 				if (tagName != "document")
@@ -229,17 +237,6 @@ namespace cppfx
 			}
 
 			ref_ptr<BitmapFont> Document::loadFont(const string& href) {
-				/*auto i = fonts.find(href);
-				if (i == fonts.end()) {
-					ref_ptr<BitmapFont> font = BitmapFont::loadBitmapFont(spriteCollection, normalizePath(basePath + href));
-					if (font.valid()) {
-						string name = font->getName();
-						registerFont(name, font);
-					}
-					return fonts[href];
-				}
-				return i->second;*/			
-
 				ref_ptr<BitmapFont> rp = spriteCollection->loadBitmapFont(href);
 				if (rp.valid())
 					fonts[rp->getName()] = rp;

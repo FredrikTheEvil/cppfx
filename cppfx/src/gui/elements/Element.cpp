@@ -624,11 +624,13 @@ namespace cppfx
 				}
 			}
 
+			static const ref_ptr<WidgetManager> s_nullWidgetManager = nullptr;
+
 			const ref_ptr<WidgetManager>& Element::widgetManager()
 			{
 				if (parent != nullptr)
 					return parent->widgetManager();
-				return nullptr;
+				return s_nullWidgetManager;
 			}
 
 			Document* Element::getDocument()
