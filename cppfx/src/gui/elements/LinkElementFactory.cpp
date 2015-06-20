@@ -1,4 +1,5 @@
 #include <cppfx/gui/elements/LinkElementFactory.h>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx {
 	namespace gui {
@@ -10,7 +11,7 @@ namespace cppfx {
 
 			ref_ptr<Element> LinkElementFactory::createElement(const string& tag, const ref_ptr<Element>& parent) {
 				if (tag != "link")
-					throw std::runtime_error("invalid tag");
+					throw RuntimeError("invalid tag");
 				return new LinkElement(parent);
 			}
 		}

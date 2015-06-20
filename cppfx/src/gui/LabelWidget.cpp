@@ -1,4 +1,5 @@
 #include <cppfx/gui/LabelWidget.h>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -189,7 +190,7 @@ namespace cppfx
 				char32_t ch(*chPtr);
 				const BitmapFontGlyph& glyph = font->getGlyph(ch);
 				if (glyph.page < 0 || glyph.page >= numPages)
-					throw std::runtime_error("page index out of range");
+					throw RuntimeError("page index out of range");
 				const BitmapFontPage& page = font->pages[glyph.page];
 				font->emit(s, rect, pos, color, glyph, page);
 				addSprite(s, page.texture);
@@ -233,7 +234,7 @@ namespace cppfx
 					char32_t ch(*chPtr);
 					const BitmapFontGlyph& glyph = font->getGlyph(ch);
 					if (glyph.page < 0 || glyph.page >= numPages)
-						throw std::runtime_error("page index out of range");
+						throw RuntimeError("page index out of range");
 					const BitmapFontPage& page = font->pages[glyph.page];
 					font->emit(s, rect, pos, color, glyph, page);
 					updateSprite(i, s, page.texture);

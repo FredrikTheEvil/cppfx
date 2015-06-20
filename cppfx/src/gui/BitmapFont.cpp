@@ -1,9 +1,10 @@
 #include <cppfx/gui/BitmapFont.h>
 #include <cppfx/gui/SpriteCollection.h>
 #include <fstream>
-#include <regex>
 #include <cstdarg>
 #include <sstream>
+#include <cppfx/Exceptions.h>
+#include <cppfx/io/Exceptions.h>
 
 namespace cppfx
 {
@@ -131,7 +132,7 @@ namespace cppfx
 				char32_t id(*ch);
 				const BitmapFontGlyph& glyph = getGlyph(id);
 				if (glyph.page < 0 || size_t(glyph.page) >= pages.size())
-					throw std::runtime_error("page index out of range");
+					throw RuntimeError("page index out of range");
 				const BitmapFontPage& page = pages[glyph.page];
 				emit(spriteBatch, rect, pos, color, glyph, page);
 			}
@@ -143,7 +144,7 @@ namespace cppfx
 				char32_t id(*ch);
 				const BitmapFontGlyph& glyph = getGlyph(id);
 				if (glyph.page < 0 || size_t(glyph.page) >= pages.size())
-					throw std::runtime_error("page index out of range");
+					throw RuntimeError("page index out of range");
 				const BitmapFontPage& page = pages[glyph.page];
 				emit(spriteBatch, rect, pos, color, glyph, page);
 			}
@@ -155,7 +156,7 @@ namespace cppfx
 				char32_t id(*ch);
 				const BitmapFontGlyph& glyph = getGlyph(id);
 				if (glyph.page < 0 || size_t(glyph.page) >= pages.size())
-					throw std::runtime_error("page index out of range");
+					throw RuntimeError("page index out of range");
 				const BitmapFontPage& page = pages[glyph.page];
 				emit(spriteBatch, rect, pos, color, glyph, page);
 			}
@@ -169,7 +170,7 @@ namespace cppfx
 				char32_t id(*ch);
 				const BitmapFontGlyph& glyph = getGlyph(id);
 				if (glyph.page < 0 || size_t(glyph.page) >= pages.size())
-					throw std::runtime_error("page index out of range");
+					throw RuntimeError("page index out of range");
 				const BitmapFontPage& page = pages[glyph.page];
 				emit(spriteBatch, rect, pos, color, glyph, page);
 			}
@@ -389,7 +390,9 @@ namespace cppfx
 					*i = '\\';
 			}
 #endif
-			std::ifstream ifs(filename, std::ios_base::in | std::ios_base::binary);
+			std::ifstream ifs(filePath, std::ios_base::in | std::ios_base::binary);
+			if (!ifs.good())
+				throw io::FileNotFoundException(filename);
 			string buffer = string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 			if (isBinaryBmfont(buffer))
 				readFromBinary(filename, buffer);
@@ -398,7 +401,7 @@ namespace cppfx
 			else if (isTextBmfont(buffer))
 				readFromText(filename, buffer);
 			else
-				throw std::runtime_error("unknown bitmap font format");
+				throw io::BadFileFormatException("unknown bitmap font format");
 		}
 	}
 }

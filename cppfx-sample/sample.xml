@@ -6,15 +6,15 @@
   </head>
   <body>
   		<sprite sprite="box"
-  				width="200"
+  				width="220"
 	  			height="100"
 	  			origin="center"
 	  			align="center"
 	  			absolute-size="absolute-size"
   			>
 	  		<label value="Hello World!" font="Arial"
-	  			x="16"
-	  			y="16"
+	  			x="20"
+	  			y="20"
 	  			absolute-offset="absolute-offset"
 	  			wave-effect="wave-effect"
 	  			/>

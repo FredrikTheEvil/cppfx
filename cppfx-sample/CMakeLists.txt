@@ -20,14 +20,14 @@ endif()
 add_executable(cppfx-sample 
 	"${CMAKE_CURRENT_SOURCE_DIR}/cppfx-sample.cpp"
 )
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
     execute_process(
         COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
     if (NOT (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7))
         message(FATAL_ERROR "${PROJECT_NAME} requires g++ 4.7 or greater.")
     endif ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 endif()
 target_link_libraries (cppfx-sample LINK_PUBLIC cppfx)

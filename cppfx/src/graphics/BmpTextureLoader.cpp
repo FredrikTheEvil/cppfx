@@ -1,5 +1,6 @@
 #include <cppfx/graphics/BmpTextureLoader.h>
 #include <fstream>
+#include <cppfx/io/Exceptions.h>
 
 namespace cppfx {
 	namespace graphics {
@@ -26,10 +27,16 @@ namespace cppfx {
 			unsigned int numColors;
 			unsigned int numImportantColors;
 
-			void parse(std::istream& stream) {
+			void parse(std::istream& stream, const string& fileName) {
 				stream.read(signature, 2);
+				if (!stream.good())
+				{
+					if (stream.eof())
+						throw io::EofException("end of file while reading file signature");
+					throw io::IoException("failed to read file signature from stream");
+				}
 				if (signature[0] != 'B' || signature[1] != 'M')
-					throw std::runtime_error("file is not a bmp file");
+					throw io::BadFileFormatException("file is not a bmp file: " + fileName);
 				stream.read(reinterpret_cast<char*>(&fileSize), 4);
 				stream.read(reinterpret_cast<char*>(&reserved0), 2);
 				stream.read(reinterpret_cast<char*>(&reserved1), 2);
@@ -47,7 +54,7 @@ namespace cppfx {
 				stream.read(reinterpret_cast<char*>(&numImportantColors), 4);
 
 				if (numBitsPerPixel != 16 && numBitsPerPixel != 24 && numBitsPerPixel != 32)
-					throw std::runtime_error("unsupported pixel format");
+					throw RuntimeError("unsupported pixel format");
 			}
 		};
 
@@ -79,9 +86,30 @@ namespace cppfx {
 		}
 
 		ref_ptr<Texture2D> BmpTextureLoader::loadTexture2D(const string& fileName) {
-			std::ifstream ifs(fileName, std::ios_base::binary | std::ios_base::in);
+			string filePath = fileName;
+			for (auto i = filePath.begin(); i != filePath.end(); ++i)
+			{
+				if (*i == '\\')
+					*i = '/';
+			}
+#ifdef WIN32
+			for (auto i = filePath.begin(); i != filePath.end(); ++i)
+			{
+				if (*i == '/')
+					*i = '\\';
+			}
+#endif
+			std::ifstream ifs(filePath, std::ios_base::binary | std::ios_base::in);
+			if (!ifs.good())
+				throw io::FileNotFoundException(fileName);
 			BitmapFileInfo fileInfo;
-			fileInfo.parse(ifs);
+			fileInfo.parse(ifs, fileName);
+			if (!ifs.good())
+			{
+				if (ifs.eof())
+					throw io::EofException("end of file while reading bitmap header");
+				throw io::IoException("failed to read bitmap header from stream");
+			}
 			
 			unsigned int rowSize = (((fileInfo.numBitsPerPixel * fileInfo.width) + 31) / 32) * 4;
 			unsigned int dataSize = rowSize * fileInfo.height;
@@ -94,9 +122,15 @@ namespace cppfx {
 			std::vector<char> imageData(dataSize);
 			std::vector<char> buffer(bufferSize);
 			ifs.read(const_cast<char*>(imageData.data()), dataSize);
+			if (!ifs.good())
+			{
+				if (ifs.eof())
+					throw io::EofException("end of file while reading bitmap data");
+				throw io::IoException("failed to read bitmap data from stream");
+			}
 
 			if (fileInfo.compression != BitmapFileCompression::NONE)
-				throw std::runtime_error("bmp rle compression is not supported");
+				throw RuntimeError("bmp rle compression is not supported");
 
 			for (unsigned int i = 0; i < fileInfo.height; i++) {
 				auto y = fileInfo.height - i - 1;
@@ -105,7 +139,7 @@ namespace cppfx {
 					auto pixelPtr = &rowPtr[(fileInfo.numBitsPerPixel / 8)*x];
 					auto bufferPixelPtr = &buffer[((i * fileInfo.height) + x) * bufferPixelSize];
 
-					bmpCopyPixel((unsigned char*)pixelPtr, (unsigned char*)bufferPixelPtr, fileInfo.numBitsPerPixel);
+					bmpCopyPixel(reinterpret_cast<unsigned char*>(pixelPtr), reinterpret_cast<unsigned char*>(bufferPixelPtr), fileInfo.numBitsPerPixel);
 				}
 			}
 

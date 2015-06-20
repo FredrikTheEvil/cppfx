@@ -89,9 +89,9 @@ namespace cppfx
 			BitmapFont& operator=(const BitmapFont&) = delete;
 
 			void read(const string& filename);
-			void readFromText(const string& filename, const string& buffer);
-			void readFromBinary(const string& filename, const string& buffer);
-			void readFromXml(const string& filename, const string& buffer);
+			void readFromText(const string& filename, const std::string& buffer);
+			void readFromBinary(const string& filename, const std::string& buffer);
+			void readFromXml(const string& filename, const std::string& buffer);
 			ref_ptr<graphics::Context> context;
 			SpriteCollection* spriteCollection;
 

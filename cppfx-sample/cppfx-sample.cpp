@@ -1,9 +1,11 @@
 #include <cppfx/platform/Window.h>
 #include <cppfx/graphics/BmpTextureLoader.h>
+#include <cppfx/graphics/MultiTextureLoader.h>
 #include <cppfx/gui/elements/Document.h>
 #include <cppfx/Time.h>
 #include <iostream>
 #include <regex>
+#include <cppfx/Exceptions.h>
 
 using namespace cppfx;
 using namespace cppfx::graphics;
@@ -11,9 +13,6 @@ using namespace cppfx::graphics;
 int main(int argc, char* argv[]) {
 	try {
 		ref_ptr<platform::Window> window = new platform::Window(1280, 720, false, "Heisann");
-		ref_ptr<BmpTextureLoader> loader = new BmpTextureLoader(window);
-		window->setTextureLoader(loader.get());
-		gui::elements::Element::registerCoreElements();
 		auto doc = gui::elements::Document::loadDocument(window, "sample.xml");
 		double deltaTime = 0.16;
 		double time = Time::getElapsedTime();
@@ -32,8 +31,9 @@ int main(int argc, char* argv[]) {
 			time = x;
 		}
 	}
-	catch (std::regex_error& e) {
-		std::cerr << e.what() << ": " << e.code();
+	catch (Exception& e)
+	{
+		std::cerr << e.what() << std::endl;
 	}
 	catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;

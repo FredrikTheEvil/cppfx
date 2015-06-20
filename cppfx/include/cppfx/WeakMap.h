@@ -4,9 +4,10 @@
 
 #include <cppfx/Observer.h>
 #include <unordered_map>
-#include "ref_ptr.h"
-#include "Referenced.h"
-#include "string.h"
+#include <cppfx/ref_ptr.h>
+#include <cppfx/Referenced.h>
+#include <cppfx/string.h>
+#include <cppfx/Exceptions.h>
 
 namespace cppfx
 {
@@ -36,7 +37,7 @@ namespace cppfx
 			{
 				auto itr = map.find(key);
 				if (itr != map.end())
-					throw std::runtime_error("key is alread in use");
+					throw RuntimeError("key is alread in use");
 				map.insert(std::pair<Key, Value*>(key, value.get()));
 				value->addObserver(this);
 			}
