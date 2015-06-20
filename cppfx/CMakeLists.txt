@@ -415,7 +415,7 @@ endif()
 if(PNG_FOUND)
 	set(CPPFX_USE_LIBPNG 1)
 	include_directories("${PNG_INCLUDE_DIRS}")
-	set(DEPENDENCIES "${DEPENDENCIES}" "{PNG_LIBRARIES}")
+	set(DEPENDENCIES "${DEPENDENCIES}" "${PNG_LIBRARIES}")
 endif()
 
 configure_file(
