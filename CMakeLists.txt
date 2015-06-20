@@ -31,7 +31,7 @@ check_function_exists(fopen_s CPPFX_HAVE_FOPEN_S)
 find_package(GLFW)
 find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)
-find_package(png)
+find_package(PNG)
 
 add_subdirectory (cppfx)
 add_subdirectory (cppfx-sample)
