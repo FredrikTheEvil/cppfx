@@ -27,7 +27,7 @@ namespace cppfx
 #ifdef CPPFX_HAVE_FOPEN_S
 			fopen_s(&fp, fileName.data(), "rb");
 #else
-			FILE *fp = fopen(fileName.data(), "rb");
+			fp = fopen(fileName.data(), "rb");
 #endif
 			if (fp == nullptr)
 				throw io::FileNotFoundException(fileName);
