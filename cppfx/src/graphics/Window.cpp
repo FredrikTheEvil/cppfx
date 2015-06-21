@@ -2,16 +2,14 @@
 #include "cppfx/weak_ptr.h"
 #include <cppfx/Exceptions.h>
 
-#ifdef CPPFX_USE_GLEW
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_GLEW)
 #include <GL/glew.h>
 #endif
 
-#ifdef CPPFX_USE_GLFW
-#include <GLFW/glfw3.h>
-#endif
-
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 #include <SDL.h>
+#elif defined(CPPFX_USE_GLFW)
+#include <GLFW/glfw3.h>
 #endif
 
 #include <stdexcept>
@@ -21,7 +19,7 @@ using namespace cppfx::graphics;
 
 namespace cppfx {
 	namespace platform {
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 		struct CPPFX_API WindowHandle {
 			SDL_Window* window;
 			SDL_GLContext context;
@@ -137,7 +135,6 @@ namespace cppfx {
 
 			glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &capsNumTexUnits);
 			glGetIntegerv(GL_MAX_TEXTURE_SIZE, &capsMaxTextureSize);
-			glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE, &capsMaxTextureSize3D);
 			glGetIntegerv(GL_MAX_CUBE_MAP_TEXTURE_SIZE, &capsMaxTextureSizeCube);
 			textureUnits = std::vector< ref_ptr<Texture> >(capsNumTexUnits);
 		}
@@ -147,7 +144,7 @@ namespace cppfx {
 		static void cleanupWindowSystem() {
 			if (!s_windowSystemInitialized)
 				return;
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 #elif defined(CPPFX_USE_GLFW)
 #endif
 		}
@@ -158,7 +155,7 @@ namespace cppfx {
 		static void initWindowSystem() {
 			if (s_windowSystemInitialized)
 				return;
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 			SDL_Init(SDL_INIT_VIDEO);
 #elif defined(CPPFX_USE_GLFW)
 			GLFWerrorfun fn;
@@ -176,7 +173,7 @@ namespace cppfx {
 		{
 			initWindowSystem();
 			handle = new WindowHandle();
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -207,7 +204,7 @@ namespace cppfx {
 #else
 			CPPFX_STATIC_ASSERT(false);
 #endif
-#ifdef CPPFX_USE_GLEW
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_GLEW)
 			auto err = glewInit();
 			if (err != GLEW_OK) {
 				auto errStr = std::string(reinterpret_cast<const char*>(glewGetErrorString(err)));
@@ -226,7 +223,7 @@ namespace cppfx {
 			else
 				glDisable(GL_DEPTH_TEST);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 			SDL_GL_SwapWindow(handle->window);
 #elif defined(CPPFX_USE_GLFW)
 			glfwSwapBuffers(handle->window);
@@ -244,7 +241,7 @@ namespace cppfx {
 					return;
 				}
 			}
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 			SDL_GL_DeleteContext(handle->context);
 			SDL_DestroyWindow(handle->window);
 #elif defined(CPPFX_USE_GLFW)
@@ -261,7 +258,7 @@ namespace cppfx {
 		}
 
 		void Window::makeCurrent() {
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 			SDL_GL_MakeCurrent(handle->window, handle->context);
 #elif defined(CPPFX_USE_GLFW)
 			glfwMakeContextCurrent(handle->window);
@@ -271,7 +268,7 @@ namespace cppfx {
 
 		void Window::swapBuffers()
 		{
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 			SDL_GL_SwapWindow(handle->window);
 #elif defined(CPPFX_USE_GLFW)
 			glfwSwapBuffers(handle->window);
@@ -294,7 +291,7 @@ namespace cppfx {
 		}
 
 		bool Window::processEvents() {
-#ifdef CPPFX_USE_SDL
+#if defined(__EMSCRIPTEN__) || defined(CPPFX_USE_SDL)
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
 				if(event.type == SDL_QUIT) {

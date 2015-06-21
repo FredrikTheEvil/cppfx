@@ -41,10 +41,9 @@ namespace cppfx {
 			string SpriteElement::getAttribute(const string& key) const {
 				if (key == "sprite")
 					return spriteName;
-				else if (key == "sprite-color")
+				if (key == "sprite-color")
 					sprite->setColor(colors::white);
-				else
-					return Element::getAttribute(key);
+				return Element::getAttribute(key);
 			}
 			void SpriteElement::removeAttribute(const string& key) {
 				if (key == "sprite") {
@@ -61,10 +60,9 @@ namespace cppfx {
 			bool SpriteElement::hasAttribute(const string& key) const {
 				if (key == "sprite")
 					return spriteName.size() > 0;
-				else if (key == "sprite-color")
+				if (key == "sprite-color")
 					return sprite->getColor() != colors::white;
-				else
-					return Element::hasAttribute(key);
+				return Element::hasAttribute(key);
 			}
 		}
 	}

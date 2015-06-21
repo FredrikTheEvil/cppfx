@@ -1,7 +1,7 @@
 #include "cppfx/graphics/Context.h"
 #include "cppfx/graphics/BmpTextureLoader.h"
 
-#ifdef CPPFX_USE_GLEW
+#if defined(CPPFX_USE_GLEW) || defined(__EMSCRIPTEN__)
 #include <GL/glew.h>
 #endif
 #include <map>
@@ -290,11 +290,6 @@ namespace cppfx {
 		int32_t Context::getMaximumTextureSize() const
 		{
 			return capsMaxTextureSize;
-		}
-
-		int32_t Context::getMaximumTextureSize3D() const
-		{
-			return capsMaxTextureSize3D;
 		}
 
 		int32_t Context::getMaximumTextureSizeCube() const

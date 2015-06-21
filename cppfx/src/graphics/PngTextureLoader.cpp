@@ -1,8 +1,9 @@
 #include <cppfx/config.h>
-#ifdef CPPFX_USE_LIBPNG
+#if defined(CPPFX_USE_LIBPNG) && !defined(__EMSCRIPTEN__)
 #include <cppfx/graphics/PngTextureLoader.h>
 #include <fstream>
 #include <cppfx/io/Exceptions.h>
+#include <png.h>
 
 namespace cppfx
 {

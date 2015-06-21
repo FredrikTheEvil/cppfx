@@ -80,7 +80,6 @@ namespace cppfx {
 			// Capabilities
 			int32_t getNumTextureUnits() const;
 			int32_t getMaximumTextureSize() const;
-			int32_t getMaximumTextureSize3D() const;
 			int32_t getMaximumTextureSizeCube() const;
 
 			int32_t getMajorVersion() const;
@@ -126,7 +125,6 @@ namespace cppfx {
 			int32_t capsNumTexUnits;
 			int32_t capsMaxTextureSize;
 			int32_t capsMaxTextureSizeCube;
-			int32_t capsMaxTextureSize3D;
 
 			int32_t capsGlVersionMajor;
 			int32_t capsGlVersionMinor;

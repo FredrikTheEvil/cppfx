@@ -7,7 +7,7 @@
 
 #include <type_traits>
 
-#ifdef CPPFX_USE_GLEW
+#if defined(CPPFX_USE_GLEW) || defined(__EMSCRIPTEN__)
 #include <GL/glew.h>
 #endif
 

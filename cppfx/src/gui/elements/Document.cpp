@@ -14,7 +14,11 @@ namespace cppfx
 			std::map<string, ref_ptr<IElementFactory> > Document::elementFactories = std::map<string, ref_ptr<IElementFactory> >();
 
 			static const string s_DocShaderDefaultVertex =
+#if defined(CPPFX_USE_OPENGL_ES) || defined(__EMSCRIPTEN__)
+				string("precision mediump float; ")
+#else
 				string("#version 120\n")
+#endif
 				+ string("attribute vec2 v_Vertex;\n")
 				+ string("attribute vec4 v_Color;\n")
 				+ string("attribute vec2 v_Uv1;\n")
@@ -27,7 +31,11 @@ namespace cppfx
 				+ string("uv = v_Uv1;\n")
 				+ string("}");
 			static const string s_DocShaderDefaultFragment =
+#if defined(CPPFX_USE_OPENGL_ES) || defined(__EMSCRIPTEN__)
+				string("precision mediump float; ")
+#else
 				string("#version 120\n")
+#endif
 				+ string("varying vec4 color;\n")
 				+ string("varying vec2 uv;\n")
 				+ string("uniform sampler2D Texture;\n")

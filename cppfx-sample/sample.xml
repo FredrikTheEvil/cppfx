@@ -2,22 +2,220 @@
 <document>
   <head>
   	<link rel="spritesheet" href="sample-spritesheet.xml"/>
-  	<link rel="font" href="Arial_30.fnt"/>
+  	<link rel="font" href="Orbitron.fnt"/>
+  	<link rel="font" href="OrbitronSmall.fnt"/>
   </head>
   <body>
   		<sprite sprite="box"
   				width="220"
-	  			height="100"
-	  			origin="center"
-	  			align="center"
+	  			height="182"
+	  			x="16"
+	  			y="-16"
+	  			origin="bottom-left"
+	  			align="bottom-left"
+	  			absolute-offset="absolute-offset"
 	  			absolute-size="absolute-size"
   			>
-	  		<label value="Hello World!" font="Arial"
+	  		<label value="Attack" font="Orbitron"
 	  			x="20"
 	  			y="20"
+	  			width="200"
+	  			height="34"
+	  			absolute-size="absolute-size"
 	  			absolute-offset="absolute-offset"
 	  			wave-effect="wave-effect"
 	  			/>
+	  		<label value="Steal" font="Orbitron"
+	  			x="20"
+	  			y="56"
+	  			width="200"
+	  			height="34"
+	  			absolute-size="absolute-size"
+	  			absolute-offset="absolute-offset"
+	  			/>
+	  		<label value="Skill" font="Orbitron"
+	  			x="20"
+	  			y="92"
+	  			width="200"
+	  			height="34"
+	  			absolute-size="absolute-size"
+	  			absolute-offset="absolute-offset"
+	  			/>
+  			<label value="Item" font="Orbitron"
+	  			x="20"
+	  			y="128"
+	  			width="200"
+	  			height="34"
+	  			absolute-size="absolute-size"
+	  			absolute-offset="absolute-offset"
+	  			/>
   		</sprite>
+  		<element width="220"
+	  			height="182"
+	  			x="252"
+	  			y="-16"
+	  			origin="bottom-left"
+	  			align="bottom-left"
+	  			absolute-offset="absolute-offset"
+	  			absolute-size="absolute-size"
+  		>
+  			<element id="characterStatus_0"
+  				x="20"
+	  			y="20"
+	  			width="200"
+	  			height="34"
+	  			absolute-size="absolute-size"
+	  			absolute-offset="absolute-offset"
+	  			>
+	  			<label value="Fredrik" font="Orbitron"
+	  			/>
+	  			<element 
+	  				x="70" y="0"
+	  				width="128" height="16"
+	  				align="top-right"
+	  				absolute-size="absolute-size"
+	  				absolute-offset="absolute-offset">
+		  			<label id="characterStatus_0_HP" font="OrbitronSmall"
+		  				value="1921/2589"
+		  				x="0"
+		  				y="0"
+		  				align="top-left"
+		  				absolute-offset="absolute-offset"
+		  			/>
+	  			</element>
+	  			<element 
+	  				x="70" y="0"
+	  				width="128" height="16"
+	  				align="top-right"
+	  				absolute-size="absolute-size"
+	  				absolute-offset="absolute-offset">
+		  			<label id="characterStatus_0_MP" font="OrbitronSmall"
+		  				value="86/122"
+		  				x="0"
+		  				y="16"
+		  				align="top-left"
+		  				absolute-offset="absolute-offset"
+		  			/>
+	  			</element>
+		  	</element>
+		  	<element id="characterStatus_1"
+	  			x="20"
+	  			y="56"
+	  			width="200"
+	  			height="34"
+	  			absolute-size="absolute-size"
+	  			absolute-offset="absolute-offset"
+	  			>
+		  		<label value="Robin" font="Orbitron"
+		  		/>
+		  		<element 
+	  				x="70" y="0"
+	  				width="128" height="16"
+	  				align="top-right"
+	  				absolute-size="absolute-size"
+	  				absolute-offset="absolute-offset">
+		  			<label id="characterStatus_1_HP" font="OrbitronSmall"
+		  				value="1921/2589"
+		  				x="0"
+		  				y="0"
+		  				align="top-left"
+		  				absolute-offset="absolute-offset"
+		  			/>
+	  			</element>
+	  			<element 
+	  				x="70" y="0"
+	  				width="128" height="16"
+	  				align="top-right"
+	  				absolute-size="absolute-size"
+	  				absolute-offset="absolute-offset">
+		  			<label id="characterStatus_1_MP" font="OrbitronSmall"
+		  				value="86/122"
+		  				x="0"
+		  				y="16"
+		  				align="top-left"
+		  				absolute-offset="absolute-offset"
+		  			/>
+	  			</element>
+		  	</element>
+		  	<element id="characterStatus_2"
+		  		x="20"
+	  			y="92"
+	  			width="200"
+	  			height="34"
+	  			absolute-size="absolute-size"
+	  			absolute-offset="absolute-offset"
+		  		>
+		  		<label value="Kristoffer" font="Orbitron"
+		  			wave-effect="wave-effect"
+		  		/>
+		  		<element 
+	  				x="70" y="0"
+	  				width="128" height="16"
+	  				align="top-right"
+	  				absolute-size="absolute-size"
+	  				absolute-offset="absolute-offset">
+		  			<label id="characterStatus_2_HP" font="OrbitronSmall"
+		  				value="1921/2589"
+		  				x="0"
+		  				y="0"
+		  				align="top-left"
+		  				absolute-offset="absolute-offset"
+		  			/>
+	  			</element>
+	  			<element 
+	  				x="70" y="0"
+	  				width="128" height="16"
+	  				align="top-right"
+	  				absolute-size="absolute-size"
+	  				absolute-offset="absolute-offset">
+		  			<label id="characterStatus_2_MP" font="OrbitronSmall"
+		  				value="86/122"
+		  				x="0"
+		  				y="16"
+		  				align="top-left"
+		  				absolute-offset="absolute-offset"
+		  			/>
+	  			</element>
+		  	</element>
+		  	<element id="characterStatus_3"
+		  		x="20"
+	  			y="128"
+	  			width="200"
+	  			height="34"
+	  			absolute-size="absolute-size"
+	  			absolute-offset="absolute-offset"
+		  		>
+	  			<label value="Henrik" font="Orbitron"
+		  		/>
+		  		<element 
+	  				x="70" y="0"
+	  				width="128" height="16"
+	  				align="top-right"
+	  				absolute-size="absolute-size"
+	  				absolute-offset="absolute-offset">
+		  			<label id="characterStatus_3_HP" font="OrbitronSmall"
+		  				value="1921/2589"
+		  				x="0"
+		  				y="0"
+		  				align="top-left"
+		  				absolute-offset="absolute-offset"
+		  			/>
+	  			</element>
+	  			<element 
+	  				x="70" y="0"
+	  				width="128" height="16"
+	  				align="top-right"
+	  				absolute-size="absolute-size"
+	  				absolute-offset="absolute-offset">
+		  			<label id="characterStatus_3_MP" font="OrbitronSmall"
+		  				value="86/122"
+		  				x="0"
+		  				y="16"
+		  				align="top-left"
+		  				absolute-offset="absolute-offset"
+		  			/>
+	  			</element>
+		  	</element>
+  		</element>
   </body>
 </document>

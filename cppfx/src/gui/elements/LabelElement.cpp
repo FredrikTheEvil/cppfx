@@ -117,7 +117,7 @@ namespace cppfx {
 				else if (key == "margin-bottom")
 					return std::to_string(label->getMargin().w);
 				else if (key == "color") {
-
+					return toColorString(label->getColor());
 				}
 				else if (key == "wave-effect") {
 					return label->getWaveEffectEnabled() ? "true" : "";
@@ -198,6 +198,8 @@ namespace cppfx {
 					return label->getWaveAmount() != 3.0f;
 				else if (key == "wave-speed")
 					return label->getWaveSpeed() != 3.5f;
+				else
+					return Element::hasAttribute(key);
 			}
 		}
 	}

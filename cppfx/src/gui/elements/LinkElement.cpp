@@ -43,14 +43,19 @@ namespace cppfx {
 					return href;
 				else if (key == "rel")
 					return rel;
+				else
+					return Element::getAttribute(key);
 			}
 			void LinkElement::removeAttribute(const string& key) {
+				Element::removeAttribute(key);
 			}
 			bool LinkElement::hasAttribute(const string& key) const {
 				if (key == "href")
 					return href.size() > 0;
-				if (key == "rel")
+				else if (key == "rel")
 					return rel.size() > 0;
+				else
+					return Element::hasAttribute(key);
 			}
 
 			void LinkElement::activate() {

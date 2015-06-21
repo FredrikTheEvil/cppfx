@@ -281,6 +281,7 @@ add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/DefaultTextureLoader.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/MultiTextureLoader.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/PngTextureLoader.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/SDLImageTextureLoader.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Buffer.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Context.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/ITextureLoader.h"
@@ -329,6 +330,7 @@ add_library (cppfx ${cppfx_LIBRARY_TYPE}
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/DefaultTextureLoader.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/MultiTextureLoader.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/PngTextureLoader.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/SDLImageTextureLoader.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Buffer.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/ITextureLoader.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/Shader.cpp"
@@ -376,46 +378,53 @@ if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
     endif ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+    set(CMAKE_CXX_FLAGS "-stdlib=libc++ -std=c++11 ${CMAKE_CXX_FLAGS}")
 endif()
 
-set(DEPENDENCIES "${OPENGL_LIBRARIES}")
+set(DEPENDENCIES)
 
-set(SDL_BUILDING_LIBRARY TRUE)
-find_package(SDL)
-
-if(SDL_FOUND)
-	set(CPPFX_USE_SDL 1)
-	include_directories("${SDL_INCLUDE_DIR}")
-	set(DEPENDENCIES ${DEPENDENCIES} ${SDL_LIBRARY})
+if(EMSCRIPTEN)
+	# We need to tell emscripten we want to use SDL2 and SDL2_image
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s DISABLE_EXCEPTION_CATCHING=0")
 else()
-	if(GLFW_FOUND)
-		set(CPPFX_USE_GLFW 1)
-		if(WIN32)
-			if(NOT GLFW_STATIC)
-				add_definitions(-DGLFW_DLL)
-			endif()
-		endif()
-		include_directories("${GLFW_INCLUDE_DIR}")
-		set(DEPENDENCIES "${DEPENDENCIES}" "${GLFW_LIBRARIES}")
+	set(DEPENDENCIES "${OPENGL_LIBRARIES}")
+
+	set(SDL_BUILDING_LIBRARY TRUE)
+	find_package(SDL)
+
+	if(SDL_FOUND)
+		set(CPPFX_USE_SDL 1)
+		include_directories("${SDL_INCLUDE_DIR}")
+		set(DEPENDENCIES ${DEPENDENCIES} ${SDL_LIBRARY})
 	else()
-		message(FATAL_ERROR, "Require either SDL or GLFW")
+		if(GLFW_FOUND)
+			set(CPPFX_USE_GLFW 1)
+			if(WIN32)
+				if(NOT GLFW_STATIC)
+					add_definitions(-DGLFW_DLL)
+				endif()
+			endif()
+			include_directories("${GLFW_INCLUDE_DIR}")
+			set(DEPENDENCIES "${DEPENDENCIES}" "${GLFW_LIBRARIES}")
+		else()
+			message(FATAL_ERROR, "Require either SDL or GLFW")
+		endif()
 	endif()
-endif()
 
-if(GLEW_FOUND)
-	set(CPPFX_USE_GLEW 1)
-	if(GLEW_STATIC)
-		add_definitions(-DGLEW_STATIC)
+	if(GLEW_FOUND)
+		set(CPPFX_USE_GLEW 1)
+		if(GLEW_STATIC)
+			add_definitions(-DGLEW_STATIC)
+		endif()
+		include_directories("${GLEW_INCLUDE_DIR}")
+		set(DEPENDENCIES "${DEPENDENCIES}" "${GLEW_LIBRARIES}")
 	endif()
-	include_directories("${GLEW_INCLUDE_DIR}")
-	set(DEPENDENCIES "${DEPENDENCIES}" "${GLEW_LIBRARIES}")
-endif()
 
-if(PNG_FOUND)
-	set(CPPFX_USE_LIBPNG 1)
-	include_directories("${PNG_INCLUDE_DIRS}")
-	set(DEPENDENCIES "${DEPENDENCIES}" "${PNG_LIBRARIES}")
+	if(PNG_FOUND)
+		set(CPPFX_USE_LIBPNG 1)
+		include_directories("${PNG_INCLUDE_DIRS}")
+		set(DEPENDENCIES "${DEPENDENCIES}" "${PNG_LIBRARIES}")
+	endif()
 endif()
 
 configure_file(
@@ -484,6 +493,7 @@ install(
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/DefaultTextureLoader.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/MultiTextureLoader.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/PngTextureLoader.h"
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/SDLImageTextureLoader.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Buffer.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/Context.h"
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/cppfx/graphics/ITextureLoader.h"

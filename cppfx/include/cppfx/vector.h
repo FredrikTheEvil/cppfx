@@ -40,6 +40,10 @@ namespace cppfx
 	inline colorf parseColor(const string& str) {
 		return colorf(1.0f, 1.0f, 1.0f, 1.0f);
 	}
+	inline string toColorString(const colorf& color)
+	{
+		return "";
+	}
 }
 
 #endif

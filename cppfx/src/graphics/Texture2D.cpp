@@ -67,7 +67,11 @@ namespace cppfx
 		{
 			glGenTextures(1, &id);
 			glBindTexture(GL_TEXTURE_2D, id);
+#if defined(CPPFX_USE_OPENGL_ES) || defined(__EMSCRIPTEN__)
+			glTexImage2D(GL_TEXTURE_2D, 0, GLint(dataFormat), width, height, 0, GLenum(dataFormat), GLenum(dataType), data);
+#else
 			glTexImage2D(GL_TEXTURE_2D, 0, GLint(format), width, height, 0, GLenum(dataFormat), GLenum(dataType), data);
+#endif
 #ifndef NDEBUG
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {

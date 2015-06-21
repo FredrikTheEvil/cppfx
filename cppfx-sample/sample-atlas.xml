@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:0ac2248c957980d3baa2a3608d4a1ab7:b065546bcbe9b30756f18646628277f3:e0124f041125bb3462974600b619dacd$ -->
+<!-- $TexturePacker:SmartUpdate:06bb969bf5781a2d70c0be3a315719f3:5c00ee76fb18e04ba4497f11aea74380:e0124f041125bb3462974600b619dacd$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -16,6 +16,7 @@ oH => sprite's original height (only available if trimmed)
 r => 'y' only set if sprite is rotated
 -->
 <TextureAtlas imagePath="sample-atlas.png" width="512" height="512">
-    <sprite n="Arial_30_0.png" x="2" y="2" w="256" h="256" pX="0.5" pY="0.5"/>
-    <sprite n="box.png" x="260" y="2" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="OrbitronSmall_0.png" x="2" y="2" w="352" h="96" pX="0.5" pY="0.5"/>
+    <sprite n="Orbitron_0.png" x="2" y="100" w="352" h="256" pX="0.5" pY="0.5"/>
+    <sprite n="box.png" x="356" y="100" w="64" h="64" pX="0.5" pY="0.5"/>
 </TextureAtlas>

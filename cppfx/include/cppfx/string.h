@@ -86,14 +86,17 @@ namespace cppfx {
 	template<>
 	inline string convert_string<string_utf16, string>(const string_utf16& source)
 	{
+		return string();
 	}
 	template<>
 	inline string convert_string<string_utf32, string>(const string_utf32& source)
 	{
+		return string();
 	}
 	template<>
 	inline string_utf16 convert_string<string, string_utf16>(const string& source)
 	{
+		return string_utf16();
 	}
 	template<>
 	inline string_utf16 convert_string<string_utf16, string_utf16>(const string_utf16& source)
@@ -103,22 +106,23 @@ namespace cppfx {
 	template<>
 	inline string_utf16 convert_string<string_utf32, string_utf16>(const string_utf32& source)
 	{
+		return string_utf16();
 	}
 	template<>
 	inline string_utf32 convert_string<string, string_utf32>(const string& source)
 	{
+		return string_utf32();
 	}
 	template<>
 	inline string_utf32 convert_string<string_utf16, string_utf32>(const string_utf16& source)
 	{
+		return string_utf32();
 	}
 	template<>
 	inline string_utf32 convert_string<string_utf32, string_utf32>(const string_utf32& source)
 	{
 		return source;
 	}
-
-
 }
 
 #endif

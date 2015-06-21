@@ -12,7 +12,8 @@ namespace cppfx
 			ref_ptr<Context> ctx(context);
 			id = glCreateShader(GLenum(type));
 			auto str = get_string_buffer(source);
-			GLint len[] = { source.size() };
+			GLint sourceSize = GLint(source.size());
+			GLint len[] = { sourceSize };
 			glShaderSource(id, 1, &str, len);
 			glCompileShader(id);
 
